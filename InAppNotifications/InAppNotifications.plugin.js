@@ -1,30 +1,28 @@
 /**
- * @name AppNotifications
- * @source https://github.com/QWERTxD/BetterDiscordPlugins/blob/main/InAppNotifications/InAppNotifications.plugin.js
- * @updateUrl https://raw.githubusercontent.com/QWERTxD/BetterDiscordPlugins/main/InAppNotifications/InAppNotifications.plugin.js
- * @website https://github.com/QWERTxD/BetterDiscordPlugins/tree/main/InAppNotifications
- * @version 1.0.4
+* @name InAppNotifications
+* @source https://github.com/QWERTxD/BetterDiscordPlugins/blob/main/InAppNotifications/InAppNotifications.plugin.js
+* @updateUrl https://raw.githubusercontent.com/QWERTxD/BetterDiscordPlugins/main/InAppNotifications/InAppNotifications.plugin.js
+* @website https://github.com/QWERTxD/BetterDiscordPlugins/tree/main/InAppNotifications
+* @version 1.0.6
 */
+
 const request = require("request");
 const fs = require("fs");
 const path = require("path");
 
 const config = {
     info: {
-        name: "AppNotifications",
+        name: "앱 내 알림_KR",
         authors: [
             {
-                name: "QWERT",
+                name: "QWERT / Edited by Najoan",
                 discord_id: "678556376640913408",
                 github_username: "QWERTxD"
             }
         ],
-    github_raw:
-      "https://raw.githubusercontent.com/QWERTxD/BetterDiscordPlugins/main/InAppNotifications/InAppNotifications.plugin.js",
-    version: "1.0.6",
-    description:
-      "Displays notifications such as new messages, friends added in Discord.",
-	},
+        version: "1.0.6",
+        description: "새 메시지, 친구 추가와 같은 알림을 표시합니다.",
+    },
   changelog: [
     {
       title: "Fix error spam",
@@ -32,116 +30,117 @@ const config = {
       items: ["Updated version of SmolAlli's fix to the constant spam of error messages (Credits to her). Should work for both the people that were previously having the issue and the the people that weren't."],
     }
   ],
-  defaultConfig: [
-    {
-      type: "slider",
-      name: "Notification display time (seconds)",
-      note: "Sets the amount of time for a notification to stay on-screen.",
-      min: 3,
-      max: 25,
-      id: "notiTime",
-      value: 3,
-      markers: [...Array(20).keys()].map((e) => (e += 1)),
-      stickToMarkers: true,
-    },
-    {
-      type: "dropdown",
-      name: "Notifications Position",
-      note: "Note: a client reload is required for changes to take effect.",
-      value: 0,
-      id: "position",
-      options: [
-        { label: "Top Right", value: 0 },
-        { label: "Top Left", value: 1 },
-        { label: "Bottom Right", value: 2 },
-        { label: "Bottom Left", value: 3 },
-      ]
-    },
-    {
-      type: "textbox",
-      name: "Keyword Notifications",
-      note: "Push notifications if certain words were sent in a message. (Separate with a comma)",
-      id: "keywords",
-      value: "",
-    },
-    {
-      type: "switch",
-      name: "keywords case sensitive",
-      id: "case",
-      value: false,
-    },
-    {
-      type: "switch",
-      name: "Mark message as read when closing",
-      note: "Marks the message as read if you press the close button on a notification.",
-      id: "markAsRead",
-      value: true,
-    },
-    {
-      type: "switch",
-      name: "Display author's highest role color if available",
-      note: "Sets the author's color in the notification to its highest role color.",
-      id: "roleColor",
-      value: false,
-    },
-    {
-      type: "switch",
-      name: "Disable when window is not focused",
-      note: "Do not push notifications if Discord is not focused.",
-      id: "disableIfNoFocus",
-      value: false,
-    },
-    {
-      type: "switch",
-      name: "Disable on Do Not Disturb",
-      note: "Do not push notifications if the current user status is Do Not Disturb.",
-      id: "disableOnDnd",
-      value: false,
-    },
-    {
-      type: "switch",
-      name: "Disable DMs notifications",
-      note: "Do not push notifications from DM chats.",
-      id: "ignoreDMs",
-      value: false,
-    },
-    {
-      type: "switch",
-      name: "Friend requests notifications",
-      note: "Push notifications for accepted friend requests.",
-      id: "relationshipsNotis",
-      value: true,
-    },
-    {
-      type: "switch",
-      name: "Disable Group DMs notifications",
-      note: "Do not push notifications from DM groups.",
-      id: "ignoreDMGroups",
-      value: false,
-    },
-    {
-      type: "textbox",
-      name: "Ignored Users IDs (Split with `, `)",
-      note: "Do not push notifications if the author's id is specified.",
-      id: "ignoredUsers",
-      value: "",
-    },
-    {
-      type: "textbox",
-      name: "Ignored Servers IDs (Split with `, `)",
-      note: "Do not push notifications if the message was sent from a specific server.",
-      id: "ignoredServers",
-      value: "",
-    },
-    {
-      type: "textbox",
-      name: "Ignored Channels IDs (Split with `, `)",
-      note: "Do not push notifications if the message was sent from a specific channel.",
-      id: "ignoredChannels",
-      value: "",
-    }
-  ]
-  };
+    defaultConfig: [
+        {
+            type: "slider",
+            name: "알림 표시 시간(초)",
+            note: "알림이 화면에 표시되는 시간을 설정합니다.",
+            min: 3,
+            max: 25,
+            id: "notiTime",
+            value: 3,
+            markers: [...Array(20).keys()].map(e => e += 1),
+            stickToMarkers: true
+        },
+        {
+            type: "dropdown",
+            name: "알림 위치", 
+            note: "참고: 변경 내용을 적용하려면 클라이언트를 다시 로드해야 합니다.", 
+            value: 0, 
+            id: "position",
+            options: [
+                { label: '오른쪽 상단', value: 0 },
+                { label: '왼쪽 상단', value: 1 },
+                { label: '오른쪽 아래', value: 2 },
+                { label: '왼쪽 아래', value: 3 },
+            ]
+        },
+        {
+            type: "textbox",
+            name: "키워드 알림",
+            note: "특정 단어가 메시지로 전송된 경우 알림을 보냅니다. (쉼표로 구분)",
+            id: "keywords",
+            value: ""
+        },
+        {
+            type: "switch",
+            name: "대소문자를 구분하는 키워드",
+            id: "case",
+            value: false
+        },
+        {
+            type: "switch",
+            name: "닫을 때 메시지를 읽은 것으로 표시",
+            note: "알림에서 닫기 단추를 누르면 메시지를 읽은 것으로 표시합니다.",
+            id: "markAsRead",
+            value: true
+        },
+        {
+            type: "switch",
+            name: "사용 가능한 경우 작성자의 가장 높은 역할 색상 표시",
+            note: "통보의 작성자 색상을 가장 높은 역할 색상으로 설정합니다.",
+            id: "roleColor",
+            value: false
+        },
+        {
+            type: "switch",
+            name: "창이 포커싱되지 않은 경우 사용 안 함",
+            note: "디스코드가 선택되지 않은 경우 알림을 보내지 않습니다.",
+            id: "disableIfNoFocus",
+            value: false
+        },
+        {
+            type: "switch",
+            name: "다른 용무 중 상태일 때 사용 안 함",
+            note: "현재 사용자 상태가 다른 용무 중인 경우 알림을 보내지 않습니다.",
+            id: "disableOnDnd",
+            value: false
+        },
+        {
+            type: "switch",
+            name: "DM(개인 메시지) 알림 사용 안 함",
+            note: "DM 채팅에서 알림을 푸시하지 마십시오.",
+            id: "ignoreDMs",
+            value: false
+        },
+        {
+            type: "switch",
+            name: "친구 추가 요청 알림",
+            note: "승인된 친구 요청에 대한 알림을 푸시합니다.",
+            id: "relationshipsNotis",
+            value: true
+        },
+        {
+            type: "switch",
+            name: "그룹 DM 알림 사용 안 함",
+            note: "DM 그룹에서 알림을 보내지 않습니다.",
+            id: "ignoreDMGroups",
+            value: false
+        },
+        {
+            type: "textbox",
+            name: "무시된 사용자 ID(', '로 분할)",
+            note: "작성자 ID가 지정된 경우 알림을 보내지 않습니다.",
+            id: "ignoredUsers",
+            value: ""
+        },
+        {
+            type: "textbox",
+            name: "무시된 서버 ID(', '로 분할)",
+            note: "메시지가 특정 서버에서 전송된 경우 알림을 보내지 않습니다",
+            id: "ignoredServers",
+            value: ""
+        },
+        {
+            type: "textbox",
+            name: "무시된 채널 ID(', '로 분할)",
+            note: "메시지가 특정 채널에서 전송된 경우 알림을 내보내지 않습니다.",
+            id: "ignoredChannels",
+            value: ""
+        }    
+
+    ]
+};
 
 module.exports = !global.ZeresPluginLibrary
   ? class {
