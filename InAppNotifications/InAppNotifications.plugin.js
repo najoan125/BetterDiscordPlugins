@@ -20,7 +20,7 @@ const config = {
                 github_username: "QWERTxD"
             }
         ],
-        version: "1.0.6",
+        version: "1.0.7",
         description: "새 메시지, 친구 추가와 같은 알림을 표시합니다.",
     },
   changelog: [
